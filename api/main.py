@@ -41,14 +41,6 @@ def health_check():
     return {"status": "API is running"}
 
 
-from pathlib import Path
-
-UI_PATH = BASE_DIR / "ui" / "index.html"
-
-@app.get("/ui")
-def serve_ui():
-    return FileResponse(UI_PATH)
-
 
 
 @app.post("/predict", response_model=ChurnResponse)
