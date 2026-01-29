@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Redirecting to Application</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <style>
+    :root {
+      --bg: #f4f4f5;
+      --card-bg: #ffffff;
+      --text-primary: #111827;
+      --text-secondary: #6b7280;
+      --border: #e5e7eb;
+      --loader: #9ca3af;
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                   Roboto, Helvetica, Arial, sans-serif;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-primary);
+    }
+
+    .container {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 40px 36px;
+      max-width: 460px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    }
+
+    h1 {
+      margin: 0 0 12px;
+      font-size: 22px;
+      font-weight: 600;
+    }
+
+    p {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    .loader {
+      margin: 28px auto 0;
+      width: 48px;
+      height: 48px;
+      border: 3px solid var(--border);
+      border-top: 3px solid var(--loader);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+
+    .status {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    footer {
+      margin-top: 24px;
+      font-size: 12px;
+      color: #9ca3af;
+    }
+  </style>
+
+  <script>
+    const RENDER_APP_URL = "https://your-render-app.onrender.com";
+    const HEALTH_ENDPOINT = `${RENDER_APP_URL}/health`;
+    const UI_ENDPOINT = `${RENDER_APP_URL}/ui`;
+    const POLL_INTERVAL_MS = 3000;
+
+    async function checkHealthAndRedirect() {
+      try {
+        const response = await fetch(HEALTH_ENDPOINT, { cache: "no-store" });
+        if (response.ok) {
+          window.location.href = UI_ENDPOINT;
+        }
+      } catch (e) {
+        // App still starting up
+      }
+    }
+
+    setInterval(checkHealthAndRedirect, POLL_INTERVAL_MS);
+    window.onload = checkHealthAndRedirect;
+  </script>
+</head>
+<body>
+  <div class="container">
+    <h1>Preparing the Application</h1>
+    <p>
+      The application is hosted on Render and may take
+      <strong>50–60 seconds</strong> to activate.
+    </p>
+    <p>
+      You will be redirected automatically as soon as the service is ready.
+    </p>
+
+    <div class="loader"></div>
+    <div class="status">Checking service health…</div>
+
+    <footer>
+      Please keep this tab open
+    </footer>
+  </div>
+</body>
+</html>
