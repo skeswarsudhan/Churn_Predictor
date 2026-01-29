@@ -4,6 +4,8 @@ import joblib
 from pathlib import Path
 from fastapi.responses import HTMLResponse
 from fastapi.responses import FileResponse
+from fastapi.middleware.cors import CORSMiddleware
+
 
 from api.schemas import ChurnRequest, ChurnResponse
 
@@ -12,6 +14,16 @@ app = FastAPI(
     title="Customer Churn Prediction API",
     description="Predicts churn probability for SaaS customers.",
     version="1.0"
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "https://skeswarsudhan.github.io",  
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
 )
 
 BASE_DIR = Path(__file__).resolve().parent.parent
