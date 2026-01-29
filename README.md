@@ -48,18 +48,13 @@ To set up and run the application locally, follow these steps:
     uvicorn api.main:app --reload
     ```
 
-3.  **Open the application in your browser:**
-    ```
-    http://127.0.0.1:8000/ui
-    ```
-
-4.  **Access Swagger API documentation:**
+3.   **Access Swagger API documentation:**
     ```
     /docs
     ```
 
 
-**Important Note:** The model was trained using `scikit-learn==1.6.1`. Using a different version may lead to model loading issues due to serialization incompatibilities.
+**Important Note:** The model was trained using `scikit-learn==1.6.1`. Using a different version may lead to model loading issues due to serialization incompatibilities. And change the `const RENDER_APP_URL = "https://churn-predictor-ful0.onrender.com"` in index.html to `const RENDER_APP_URL = "http://127.0.0.1"` while using in the local system.
 
 ---
 
@@ -68,9 +63,8 @@ To set up and run the application locally, follow these steps:
 ```
 api/        → FastAPI backend
 model/      → Serialized Random Forest pipeline
-ui/         → Prediction interface
 training/   → Jupyter notebook used for experimentation
-index.html  → Web deployment
+index.html  → Interface for Web deployment
 ```
 
 ---
